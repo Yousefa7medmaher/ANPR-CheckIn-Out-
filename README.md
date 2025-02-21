@@ -19,35 +19,84 @@ This project implements an **Automated Number Plate Recognition (ANPR)** system 
 - **Anaconda** (Environment management)
 - **MySQL, Express.js, HTML, CSS, Node.js** (Web interface for history tracking)
 
-## Installation
+## Installation & Setup
+
 ### Prerequisites:
-- Python (>=3.8)
-- Anaconda
-- Node.js & npm
-- MySQL
+- Download and install **Anaconda** [here](https://www.anaconda.com/products/distribution)
+- Install **MySQL** [here](https://dev.mysql.com/downloads/installer/)
+- Install **Node.js** and **npm** [here](https://nodejs.org/)
+- Install **VS Code** [here](https://code.visualstudio.com/)
 
 ### Steps:
-1. Clone this repository:
-   ```sh
-   git clone https://github.com/Yousefa7medmaher/ANPR-System.git
-   cd ANPR-System
-   ```
-2. Setup Python environment:
-   ```sh
-   conda create --name anpr_env python=3.8
-   conda activate anpr_env
-   pip install -r requirements.txt
-   ```
-3. Setup Web Application:
-   ```sh
-   cd server
-   npm install
-   node server.js
-   ```
+
+#### 1. Clone this repository:
+```sh
+git clone https://github.com/Yousefa7medmaher/ANPR-System.git
+cd ANPR-System
+```
+
+#### 2. Create and Activate Anaconda Virtual Environment:
+```sh
+conda create --name anpr_env python=3.8
+conda activate anpr_env
+```
+
+#### 3. Install Required Python Packages:
+```sh
+pip install opencv-python numpy ultralytics paddleocr mysql-connector-python flask
+```
+
+#### 4. Setup Web Application:
+```sh
+cd server
+npm install
+node server.js
+```
+
+#### 5. Create MySQL Database:
+```sql
+CREATE DATABASE anpr_db;
+USE anpr_db;
+
+CREATE TABLE car_log (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    plate_number VARCHAR(20) NOT NULL,
+    check_in_time DATETIME NOT NULL,
+    check_out_time DATETIME NULL,
+    status VARCHAR(10) NOT NULL DEFAULT 'IN'
+);
+```
+
+#### 6. Setup Database Connection in `.env` file:
+Create a `.env` file in the root directory and add:
+```env
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=yourpassword
+DB_NAME=anpr_db
+```
+
+#### 7. Open Project in VS Code:
+```sh
+code .
+```
+
+#### 8. Run ANPR System:
+```sh
+python main.py
+```
 
 ## Usage
-- Run the Python script to capture and process images.
-- Use the web application to view check-in and check-out history.
+1. **Run the Python script** to capture and process images:
+   ```sh
+   python main.py
+   ```
+2. **Check the web application** to view vehicle check-in and check-out history:
+   ```sh
+   cd server
+   node server.js
+   ```
+3. Open `http://localhost:3000` in your browser to access the web interface.
 
 ## Future Improvements
 - Optimize the model for faster inference.
