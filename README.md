@@ -1,5 +1,9 @@
 # ANPR System for Vehicle Check-in and Check-out
 
+![overViewAllSystem](OverView.jpg)
+
+
+
 ## Overview
 This project implements an **Automated Number Plate Recognition (ANPR)** system to automate vehicle check-in and check-out processes using deep learning and computer vision techniques. The system captures license plate images, processes them to extract text, and stores the data for future reference. A web interface is also developed to track vehicle history.
 
