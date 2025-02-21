@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="stylesheet" href="style.cs">
+    <style>
+        :root {
+            --primary-color: #333;
+            --secondary-color: #fff;
+            --background-color: #f4f4f4;
+            --hover-scale: 1.05;
+            --transition-speed: 0.3s;
+            --text-color:white ;
+        }
+    
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #294872, #021d36e7); /* White to Cyan Gradient */
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+    
+        header, footer {
+            background: linear-gradient(to right, #161f2c, #021d36e7); /* White to Cyan Gradient */
+
+            color: var(--text-color);
+            text-align: center;
+            padding: 20px 0;
+        }
+        header {
+            background: linear-gradient(to right, #161f2c, #021d36e7); /* White to Cyan Gradient */
+            color: var(--text-color);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-logo h1 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-color); 
+        }
+
+        .navbar-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar-links li {
+            margin-left: 10px;
+        }
+
+        .navbar-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            padding: 12px;
+            transition: 0.5s;
+            border-radius: 12px;
+        }
+
+        .navbar-links a:hover {
+            background-color: var(--hover-bg);
+            color: white;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100vh;
+            background: var(--primary-color);
+            padding-top: 60px;
+            transition: 0.3s;
+            z-index: 1100;
+        }
+
+        .sidebar a {
+            display: block;
+            color: var(--secondary-color);
+            padding: 15px 20px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar-links {
+                display: none;
+            }
+
+            .menu-toggle {
+                display: block;
+                color: var(--primary-color);
+            }
+
+            .sidebar.active {
+                left: 0;
+            }
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+    
+        .gallery-item {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+        }
+    
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 2px solid #ddd;
+        }
+    
+        .gallery-item h4 {
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+    
+        .gallery-item:hover {
+            transform: scale(var(--hover-scale));
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    
+        footer {
+            margin-top: 20px;
+            background: linear-gradient(to right, #161f2c, #021d36e7); /* White to Cyan Gradient */
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    
+        @media (max-width: 480px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+    
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <header>
+        <div class="menu-toggle" onclick="toggleSidebar()">&#9776;</div>
+        <div class="navbar-logo">
+            <h1>DATASET</h1>
+        </div>
+        <ul class="navbar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="#plans">Plans</a></li>
+            <li><a href="#teamwork">TeamWork</a></li>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#settings">Setting</a></li>
+        </ul>
+    </header>
+    <div class="gallery"> 
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="images/img1.jpg" alt="Car1">
+                    <h4>Car1</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img2.jpg" alt="Car2">
+                    <h4>Car2</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img3.jpg" alt="Car3">
+                    <h4>Car3</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img4.jpg" alt="Car4">
+                    <h4>Car4</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img5.jpg" alt="Car5">
+                    <h4>Car5</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img6.jpg" alt="Car6">
+                    <h4>Car6</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img7.jpg" alt="Car7">
+                    <h4>Car7</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img8.jpg" alt="Car8">
+                    <h4>Car8</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img9.jpg" alt="Car9">
+                    <h4>Car9</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img10.jpg" alt="Car10">
+                    <h4>Car10</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img11.jpg" alt="Car11">
+                    <h4>Car11</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img12.jpg" alt="Car12">
+                    <h4>Car12</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img13.jpg" alt="Car13">
+                    <h4>Car13</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img14.jpg" alt="Car14">
+                    <h4>Car14</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img15.jpg" alt="Car15">
+                    <h4>Car15</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img16.jpg" alt="Car16">
+                    <h4>Car16</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img17.jpg" alt="Car17">
+                    <h4>Car17</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img18.jpg" alt="Car18">
+                    <h4>Car18</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img19.jpg" alt="Car19">
+                    <h4>Car19</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img20.jpg" alt="Car20">
+                    <h4>Car20</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img21.jpg" alt="Car21">
+                    <h4>Car21</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img22.jpg" alt="Car22">
+                    <h4>Car22</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img23.jpg" alt="Car23">
+                    <h4>Car23</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img24.jpg" alt="Car24">
+                    <h4>Car24</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img25.jpg" alt="Car25">
+                    <h4>Car25</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img26.jpg" alt="Car26">
+                    <h4>Car26</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img27.jpg" alt="Car27">
+                    <h4>Car27</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img28.jpg" alt="Car28">
+                    <h4>Car28</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img29.jpg" alt="Car29">
+                    <h4>Car29</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img30.jpg" alt="Car30">
+                    <h4>Car30</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img31.jpg" alt="Car31">
+                    <h4>Car31</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img32.jpg" alt="Car32">
+                    <h4>Car32</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img33.jpg" alt="Car33">
+                    <h4>Car33</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img34.jpg" alt="Car34">
+                    <h4>Car34</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img35.jpg" alt="Car35">
+                    <h4>Car35</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img36.jpg" alt="Car36">
+                    <h4>Car36</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img37.jpg" alt="Car37">
+                    <h4>Car37</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img38.jpg" alt="Car38">
+                    <h4>Car38</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img39.jpg" alt="Car39">
+                    <h4>Car39</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img40.jpg" alt="Car40">
+                    <h4>Car40</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img41.jpg" alt="Car41">
+                    <h4>Car41</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img42.jpg" alt="Car42">
+                    <h4>Car42</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img43.jpg" alt="Car43">
+                    <h4>Car43</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img44.jpg" alt="Car44">
+                    <h4>Car44</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img45.jpg" alt="Car45">
+                    <h4>Car45</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img46.jpg" alt="Car46">
+                    <h4>Car46</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img47.jpg" alt="Car47">
+                    <h4>Car47</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img48.jpg" alt="Car48">
+                    <h4>Car48</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img49.jpg" alt="Car49">
+                    <h4>Car49</h4>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/img50.jpg" alt="Car50">
+                    <h4>Car50</h4>
+                </div>
+            </div> 
+    </div>
+
+    <footer>
+        <p>&copy; 2023 Image Gallery. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        
+            function toggleSidebar() {
+                document.getElementById("sidebar").classList.toggle("active");
+            }
+            
+    </script>
+</body>
+</html>

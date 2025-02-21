@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <title>Dashboard</title>
+  </head>
+  <body>
+    <div class="loader">
+      <h1>Loading<span>....</span></h1>
+    </div>
+    <div class="page-content index-page">
+      <div class="sidebar">
+        <div class="brand">
+          <i class="fa-solid fa-xmark xmark"></i>
+          <h3 class="brand-name">Joo Team </h3>
+        </div>
+        <ul>
+          <li>
+            <a href="index.html" class="sidebar-link">
+              <i class="fa-regular fa-chart-bar fa-fw"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="sidebar-link">
+              <i class="fa-solid fa-gear fa-fw"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="#" class="sidebar-link">
+              <i class="fa-regular fa-user fa-fw"></i><span>Profile</span>
+            </a>
+          </li> 
+          <li>
+            <a href="http://localhost:3000/" class="sidebar-link">
+              <i class="fa-regular fa-circle-user fa-fw"></i
+              ><span>History</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="Dataset.html" class="sidebar-link">
+              <i class="fa-regular fa-file fa-fw"></i> <span>Data Set</span>
+            </a>
+          </li>
+
+            <li>
+                <a href="./pages/Plans.html" class="sidebar-link">
+                <i class="fa-regular fa-credit-card fa-fw"></i><span>Plans</span>
+            </a>
+            </li>
+        </ul>
+      </div>
+      <main>
+        <div class="header">
+          <i class="fa-solid fa-bars bar-item"></i>
+          <div class="search">
+            <input type="search" placeholder="Type A Keyword" />
+          </div>
+
+          <div class="profile">
+            <span class="bell"><i class="fa-regular fa-bell fa-lg"></i></span>
+
+            <img src="images/icon.jpg" alt="No Image" style="border-radius: ;" />
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="title">
+            <h1>Dashboard</h1>
+          </div> 
+
+          <iframe src="http://localhost:3000/" frameborder="0" width="50%" height="500px"></iframe>
+      </main>
+    </div>
+    <script src="./js/script.js"></script>
+  </body>
+</html>

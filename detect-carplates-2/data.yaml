@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 1
+names: ['car-plate']
+
+roboflow:
+  workspace: anpr-rac8v
+  project: detect-carplates
+  version: 2
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/anpr-rac8v/detect-carplates/dataset/2
