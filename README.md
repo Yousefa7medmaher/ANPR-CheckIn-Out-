@@ -207,11 +207,9 @@ python app.py
 
  
 
-## 📝 License
-This project is licensed under the **MIT License**.
-## 🌟 Contributors
-👤 **Yousef Ahmed Maher**  
-🔗 [GitHub](https://github.com/Yousefa7medmaher) | [LinkedIn](https://www.linkedin.com/in/yousef-ahmed-maher-272275279)
+ ## 🌟 Contributors
+👤 **Yousef Ahmed Maher** (Team Lead)  
+🔗 [GitHub](https://github.com/Yousefa7medmaher) | [LinkedIn](https://www.linkedin.com/in/yousef-ahmed-maher-272275279)  
 👤 **Hazem**  
 👤 **Ahmed Alaa**  
 👤 **Zyad**  
@@ -220,6 +218,7 @@ This project is licensed under the **MIT License**.
 👤 **Mena**  
 
 ---
+ 
 
 ## 📝 License
 This project is licensed under the **MIT License**.
