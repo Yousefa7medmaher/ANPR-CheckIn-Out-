@@ -3,53 +3,74 @@ import cv2
 import numpy as np
 from datetime import datetime
 from car_plate_detection import detect_car_plate
-from car_log import insert_car_log, get_current_car_log, update_car_log_status
+from car_log import insert_entry, update_exit
 from ultralytics import YOLO
 from paddleocr import PaddleOCR
 
 def main():
-    # تحميل نموذج YOLO و OCR للتعرف على الأرقام العربية
-    model = YOLO('best.pt')
-    ocr = PaddleOCR(lang='ar')
+    try:
+        # Load car plate detection model
+        model = YOLO('best.pt')
+        ocr = PaddleOCR(lang='ar')
 
-    # تحديد مسار الصورة
-    image_path = 'imagesToTest/img34.jpg'
+        # Define test image
+        image_path = 'imagesToTest/img34.jpg'
+        
+        # Perform plate detection
+        image, detected_data, confidences = detect_car_plate(image_path, model, ocr)
 
-    # اكتشاف لوحة السيارة باستخدام YOLO و OCR
-    image, detected_data, confidences = detect_car_plate(image_path, model, ocr)
+        if detected_data:
+            plate_text = ' '.join(detected_data).strip()
+            print(f'🔍 Recognized Plate: {plate_text}')
 
-    if detected_data:
-        plate_text = ' '.join(detected_data)  # دمج النصوص المستخرجة إذا كان هناك أكثر من جزء
-        print(f'Detected Car Plate: {plate_text}')
+            if confidences:
+                accuracy = np.mean(confidences) * 100
+                print(f"✅ Recognition Accuracy: {accuracy:.2f}%")
 
-        # حساب دقة التعرف على النص وعرضها
-        if confidences:
-            accuracy = np.mean(confidences) * 100
-            print(f"Accuracy: {accuracy:.2f}%")
+            # Separate letters and numbers in the plate
+            letters = ''.join([char for char in plate_text if char.isalpha()])
+            numbers = ''.join([char for char in plate_text if char.isdigit()])
 
-        # التحقق مما إذا كانت السيارة مسجلة مسبقًا في قاعدة البيانات
-        car_log = get_current_car_log(plate_text)
-
-        if car_log:
-            if car_log[4] == 'In':
-                # تحديث وقت الخروج إذا كانت السيارة بالفعل داخل الموقف
-                print(f"Car {plate_text} is currently logged in. Updating exit time.")
-                update_car_log_status(plate_text, 'Out')
+            # Check if the car is already logged in
+            if is_car_logged_in(letters, numbers):
+                print(f"🚗 Car {plate_text} is already logged in. Logging out now...")
+                update_exit(letters, numbers)
             else:
-                print(f"Car {plate_text} has already exited.")
+                print(f"🚗 Car {plate_text} is not logged in yet. Logging in now...")
+                insert_entry(letters, numbers)
+
+            # Save the processed image
+            output_path = 'outputFolder/output_image.jpg'
+            cv2.imwrite(output_path, image)
+            print(f"📸 Processed image saved at: {output_path}")
+
+            # Display the image
+            cv2.imshow("Detected Car Plate", image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
         else:
-            # تسجيل دخول السيارة إذا لم تكن مسجلة
-            print(f"Car {plate_text} is logging in.")
-            insert_car_log(plate_text, 'In')
+            print("❌ No license plate detected in the image.")
 
-        # حفظ الصورة مع الإطار والنص
-        output_path = 'outputFolder/output_image.jpg'
-        cv2.imwrite(output_path, image)
+    except Exception as e:
+        print(f"⚠️ Error occurred while running the program: {e}")
 
-        # عرض الصورة المعدلة
-        cv2.imshow("Detected Car Plate", image)
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+def is_car_logged_in(letters, numbers):
+    """Check if the car has entered the parking lot and hasn't exited yet."""
+    import mysql.connector
+    from db_connection import create_db_connection
+
+    try:
+        with create_db_connection() as db_connection, db_connection.cursor() as cursor:
+            check_query = """
+                SELECT id FROM appointments 
+                WHERE user_id = (SELECT id FROM users WHERE letters = %s AND number = %s) 
+                AND exit_time IS NULL
+            """
+            cursor.execute(check_query, (letters, numbers))
+            return cursor.fetchone() is not None
+    except mysql.connector.Error as err:
+        print(f"❌ Database error: {err}")
+        return False
 
 if __name__ == '__main__':
     main()
