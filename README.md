@@ -54,3 +54,59 @@ This project implements an **Automated Number Plate Recognition (ANPR)** system 
 ```sh
 git clone https://github.com/Yousefa7medmaher/ANPR-System.git
 cd ANPR-System
+```
+
+#### 2️⃣ Create a Conda Environment
+```sh
+conda create --name anpr_env python=3.9 -y
+conda activate anpr_env
+```
+
+#### 3️⃣ Install Dependencies
+```sh
+pip install -r requirements.txt
+```
+
+#### 4️⃣ Set Up the Database
+
+Run the following SQL commands in MySQL:
+
+```sql
+CREATE DATABASE CarEntryDB;
+USE CarEntryDB;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    letters VARCHAR(10) NOT NULL,
+    number VARCHAR(10) NOT NULL,
+    CONSTRAINT unique_car UNIQUE (letters, number)
+);
+
+CREATE TABLE appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    entry_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    exit_time DATETIME DEFAULT NULL,
+    duration INT GENERATED ALWAYS AS (TIMESTAMPDIFF(MINUTE, entry_time, exit_time)) STORED,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    CONSTRAINT unique_entry UNIQUE (user_id, exit_time)
+);
+
+CREATE INDEX idx_car ON users(letters, number);
+```
+
+#### 5️⃣ Run the Application
+```sh
+python app.py
+```
+
+---
+
+## 🌟 Contributors
+👤 **Yousef Ahmed Maher**  
+🔗 [GitHub](https://github.com/Yousefa7medmaher) | [LinkedIn](https://www.linkedin.com/in/yousef-ahmed-maher-272275279)
+
+---
+
+## 📝 License
+This project is licensed under the **MIT License**.
