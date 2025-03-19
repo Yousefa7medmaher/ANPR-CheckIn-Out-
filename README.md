@@ -97,7 +97,7 @@ CREATE INDEX idx_car ON users(letters, number);
 
 #### 5️⃣ Run the Application
 ```sh
-python app.py
+python main.py
 ```
 
 ---
